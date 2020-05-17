@@ -10,33 +10,42 @@ class EditBrand extends Component
 {
     public $brandId;
     public $newName, $error;
-    public $defaultBrand;
+    public $defaultBrand, $defaultBrandId;
     public function mount(Brand $brand) {
         $this->brandId = $brand->id;
         $this->defaultBrand = $brand;
+        // $this->defaultBrandId = $this->defaultBrand['id'];
+        // $this->defaultBrand->toArray();
+        // return dd($this->defaultBrandId);
     }
     public function updated($newName) {
         if($this->newName == '') {
             $this->error = true;
         }
         $this->validateOnly($newName,[
-            'newName' => 'required',
+            'newName' => 'max:255',
         ]);
         $this->error = false;
     }
     public function updateRecord($record) {
         $newBrand = Brand::find($record);
         // $newBrand->name = $this->newName;
-        if($this->newName == '') {
-            $this->error = true;
+        if(!empty($this->newName)) {
+            $this->validate([
+                'newName' => 'max:255',
+            ]);
+            $newBrand->update(['name' => $this->newName]);
         }
-        $this->validate([
-            'newName' => 'required',
-        ]);
-        $newBrand->update(['name' => $this->newName]);
-        $this->error = false;
-        $this->emit('brandUpdated');
-        return redirect()->to('/companies');
+
+        // if($this->newName == '') {
+        //     $this->error = true;
+        // }
+        // $this->validate([
+        //     'newName' => 'required',
+        // ]);
+        // $newBrand->update(['name' => $this->newName]);
+        // $this->error = false;
+        // $this->emit('brandUpdated');
     }
 
     public function render()

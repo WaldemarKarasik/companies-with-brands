@@ -1,13 +1,13 @@
 <div x-data="{show:false}">
     <div>
         @foreach($companies as $company)
-            <strong class="text-3xl">{{$company->name}}</strong>
+            <a href="{{route('edit-company', $company->id, key($company->toArray()))}}"><strong class="text-3xl">{{$company->name}}</strong></a>
             <button @click = "show = true">Add brand</button>
             <div x-show.transition.duration.500ms="show" class="flex flex-col absolute mt-5 ml-4 border-4 border-black h-3/6" @click.away="show = !show">
-            <label for="newBrand">Name</label>
-            <input type="text" wire:model="newBrand" name="newBrand">
-            <label for="founded">Foundation date</label>
-            <input type="text" class="text-lg px-3 font-bold"wire:model="founded" placeholder="year-month-day" name="founded">
+{{--            <label for="newBrand">Name</label>--}}
+{{--            <input type="text" wire:model="newBrand" name="newBrand">--}}
+{{--            <label for="founded">Foundation date</label>--}}
+{{--            <input type="text" class="text-lg px-3 font-bold"wire:model="founded" placeholder="year-month-day" name="founded">--}}
             <button x-on:click="show = false" wire:click="addBrand({{$company->id}})">Ok</button>
             </div>
             <div class="-mt-1 flex flex-col">

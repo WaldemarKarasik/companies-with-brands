@@ -13,7 +13,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/', function() {
+    return redirect('/companies');
+});
 Route::get('/companies', function () {
     return view('companies');
 });
 Route::livewire('/{brand}/edit', 'edit-brand')->name('edit-brand');
+Route::livewire('/{company}/edit-company', 'edit-company')->name('edit-company');
